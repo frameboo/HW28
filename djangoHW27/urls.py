@@ -20,6 +20,14 @@ from django.urls import path, include
 from ads.views.ad import *
 from ads.views.category import *
 from djangoHW27 import settings
+from rest_framework import routers
+from users.views import *
+
+router = routers.SimpleRouter()
+router.register(r'location', LocationViewSet)
+router.register(r'ad', AdViewSet)
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,6 +39,8 @@ urlpatterns = [
     path('user/', include('users.urls')),
 
 ]
+
+urlpatterns += router.urls
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
