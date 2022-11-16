@@ -2,19 +2,24 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from ads.models import Selection
-from ads.serializers import SelectionListSerializer, SelectionDetailSerializer
+from ads.permissions import IsCreatedBy
+from ads.serializers import SelectionListSerializer, SelectionDetailSerializer, SelectionSerializer
 
 
 class SelectionViewSet(ModelViewSet):
-    queryset = Selection.objects.order_by('-price')
-    default_serializer = SelectionDetailSerializer
+    queryset = Selection.objects.all()
+    default_serializer = SelectionSerializer
 
     serializer_classes = {
-        'list': SelectionListSerializer
+        'list': SelectionListSerializer,
+        'retrieve': SelectionDetailSerializer
     }
     default_permissions = [AllowAny()]
     permissions = {
-        'retrieve': [IsAuthenticated()]
+        'create': [IsAuthenticated()],
+        'update': [IsAuthenticated(), IsCreatedBy()],
+        'partial_update': [IsAuthenticated(), IsCreatedBy()],
+        'destroy': [IsAuthenticated(), IsCreatedBy()]
     }
 
     def get_permissions(self):

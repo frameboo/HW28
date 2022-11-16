@@ -10,6 +10,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.viewsets import ModelViewSet
 
 from ads.models import Ad, Category
+from ads.permissions import IsCreatedByOrAdminOrModerator
 from ads.serializers import AdSerializer, AdDetailSerializer
 from djangoHW27.settings import TOTAL_ON_PAGE
 from users.models import User
@@ -30,7 +31,10 @@ class AdViewSet(ModelViewSet):
     }
     default_permissions = [AllowAny()]
     permissions = {
-        'retrieve': [IsAuthenticated()]
+        'create': [IsAuthenticated()],
+        'update': [IsAuthenticated(), IsCreatedByOrAdminOrModerator()],
+        'partial_update': [IsAuthenticated(), IsCreatedByOrAdminOrModerator()],
+        'destroy': [IsAuthenticated(), IsCreatedByOrAdminOrModerator()]
     }
 
     def get_permissions(self):

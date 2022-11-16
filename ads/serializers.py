@@ -8,7 +8,7 @@ from users.serializers import UserAdSerializer
 
 class AdSerializer(serializers.ModelSerializer):
     class Meta:
-        model =Ad
+        model = Ad
         fields = "__all__"
 
 
@@ -17,7 +17,7 @@ class AdDetailSerializer(serializers.ModelSerializer):
     category = SlugRelatedField(slug_field='name', queryset=Category.objects.all())
 
     class Meta:
-        model =Ad
+        model = Ad
         fields = "__all__"
 
 
@@ -27,7 +27,14 @@ class SelectionListSerializer(serializers.ModelSerializer):
         fields = ["id", "name"]
 
 
+class SelectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Selection
+        fields = "__all__"
+
+
 class SelectionDetailSerializer(serializers.ModelSerializer):
+    items = AdSerializer(many=True)
     class Meta:
         model = Selection
         fields = "__all__"

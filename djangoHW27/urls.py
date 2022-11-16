@@ -19,13 +19,15 @@ from django.urls import path, include
 
 from ads.views.ad import *
 from ads.views.category import *
+from ads.views.selection import SelectionViewSet
 from djangoHW27 import settings
 from rest_framework import routers
 from users.views import *
 
 router = routers.SimpleRouter()
-router.register(r'location', LocationViewSet)
-router.register(r'ad', AdViewSet)
+router.register('location', LocationViewSet)
+router.register('ad', AdViewSet)
+router.register('selection', SelectionViewSet)
 
 
 
