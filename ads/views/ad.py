@@ -11,7 +11,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from ads.models import Ad, Category
 from ads.permissions import IsCreatedByOrAdminOrModerator
-from ads.serializers import AdSerializer, AdDetailSerializer
+from ads.serializers import AdSerializer, AdDetailSerializer, AdCreateSerializer
 from djangoHW27.settings import TOTAL_ON_PAGE
 from users.models import User
 
@@ -27,7 +27,8 @@ class AdViewSet(ModelViewSet):
     default_serializer = AdSerializer
 
     serializer_classes = {
-        'retrieve': AdDetailSerializer
+        'retrieve': AdDetailSerializer,
+        'create': AdCreateSerializer
     }
     default_permissions = [AllowAny()]
     permissions = {

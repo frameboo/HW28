@@ -8,6 +8,7 @@ from django.views.generic import DetailView
 
 from ads.models import Category
 
+
 @method_decorator(csrf_exempt, name='dispatch')
 class CategoryListCreateView(View):
 
@@ -15,8 +16,9 @@ class CategoryListCreateView(View):
         categories = Category.objects.all()
         response = []
         for cat in categories:
-            response.append({'id':cat.pk,
-                             'name':cat.name
+            response.append({'id': cat.pk,
+                             'name': cat.name,
+                             'slug': cat.slug
                              })
 
         return JsonResponse(response, safe=False)
@@ -24,8 +26,9 @@ class CategoryListCreateView(View):
     def post(self, request):
         data = json.loads(request.body)
         cat = Category.objects.create(**data)
-        return JsonResponse({'id':cat.pk,
-                             'name':cat.name
+        return JsonResponse({'id': cat.pk,
+                             'name': cat.name,
+                             'slug': cat.slug
                              }, safe=False)
 
 
@@ -36,4 +39,3 @@ class CategoryDetailView(DetailView):
         cat = self.get_object()
         return JsonResponse({'id': cat.pk,
                              'name': cat.name}, safe=False)
-
