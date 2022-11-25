@@ -40,8 +40,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
             obj, _ = Location.objects.get_or_create(name=locations)
             user.location.add(obj)
 
-        # user.set_password(validated_data['password'])
-        # user.save()
+
 
         return user
 

@@ -5,9 +5,15 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView
+from rest_framework.generics import CreateAPIView
 
 from ads.models import Category
+from ads.serializers import CategorySerializer
 
+
+class CategoryCreateView(CreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
 @method_decorator(csrf_exempt, name='dispatch')
 class CategoryListCreateView(View):
